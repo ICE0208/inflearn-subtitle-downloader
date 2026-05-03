@@ -47,6 +47,13 @@ new MutationObserver(() => {
 
 // 버튼 주입 트리거 — URL 옵저버와 분리 (같은 옵저버면 버튼 제거가 재주입을 순환 트리거함)
 new MutationObserver(() => {
+  const panel = document.querySelector(SELECTORS.scriptPanel);
+  if (panel?.classList.contains('drawer') || !isScriptPanelOpen()) {
+    document.getElementById("inflearn-dl-btn")?.remove();
+    document.getElementById("inflearn-dl-menu")?.remove();
+    return;
+  }
+  if (document.getElementById("inflearn-dl-btn")) return;
   if (!tryInject()) scheduleInject();
 }).observe(document.body, { childList: true, subtree: true });
 
@@ -69,21 +76,22 @@ function tryInject() {
   injectStyles();
   const { group, closeBtn } = target;
   const btn = buildBtn();
-  closeBtn ? group.insertBefore(btn, closeBtn) : group.appendChild(btn);
+  group.insertBefore(btn, closeBtn);
   return true;
 }
 
 function findScriptHeader() {
   const panel = document.querySelector(SELECTORS.scriptPanel);
-  if (!panel) return null;
+  if (!panel || panel.classList.contains('drawer')) return null;
 
   // data-script-id는 스크립트 패널 전용 — 다른 탭과 구분
   if (!panel.querySelector('[data-script-id]')) return null;
 
+  // CloseButton이 없으면 헤더가 아직 미렌더링 — scheduleInject가 재시도
   const closeBtn = panel.querySelector(SELECTORS.closeBtn);
-  const group = closeBtn?.parentElement ?? panel;
+  if (!closeBtn) return null;
 
-  return { group, closeBtn };
+  return { group: closeBtn.parentElement, closeBtn };
 }
 
 function injectStyles() {

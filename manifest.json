@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "인프런 자막 다운로더",
+  "version": "1.0.0",
+  "description": "인프런 강의 자막(스크립트)을 텍스트로 다운로드합니다",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "host_permissions": ["https://www.inflearn.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.inflearn.com/courses/lecture*"],
+      "js": ["content-interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://www.inflearn.com/courses/lecture*"],
+      "js": ["content-ui.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

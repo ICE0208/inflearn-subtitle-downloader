@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="icons/icon.png" width="128" alt="인프런 자막 다운로더" />
+  <img src="assets/icon.png" width="128" alt="인프런 자막 다운로더" />
 
   # 인프런 자막 다운로더
 
@@ -25,7 +25,7 @@ Chrome 웹 스토어에 등록되어 있지 않으므로 아래 방법으로 직
 
 ## 사용 방법
 
-![screenshot](screenshot.png)
+![screenshot](assets/screenshot.png)
 
 1. 인프런 강의 페이지에서 **스크립트** 탭 열기
 2. 스크립트 탭 우측 상단에 나타난 다운로드 버튼(↓) 클릭
